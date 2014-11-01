@@ -8,7 +8,7 @@ class Img2Ascii {
    double pixval;
    PrintWriter prntwrt;
    FileWriter filewrt;
-   final String characters = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
+   final String characters = "$@%&#*/\\|()1{}[]?-_+~<>!;:,\"^`'. ";
    final int numQuant = characters.length() - 1;
    final double incr = 270.0/numQuant;
    
@@ -46,12 +46,10 @@ class Img2Ascii {
    
    public double findAverage(BufferedImage img, int x, int y) {
       double total = 0.;
-      for (int i = x; i < x + 10; i++) {
-         for (int j = y; j < y + 10; j++) {
-            if (i < img.getWidth() && y < img.getHeight()) {
-               Color pixcol = new Color(img.getRGB(i, j));
-               total += (((pixcol.getRed() * 0.30) + (pixcol.getBlue() * 0.59) + (pixcol.getGreen() * 0.11)));
-            }
+      for (int i = x; i < x + 10 && i < img.getWidth(); i++) {
+         for (int j = y; j < y + 10 && j < img.getHeight(); j++) {
+            Color pixcol = new Color(img.getRGB(i, j));
+            total += (((pixcol.getRed() * 0.30) + (pixcol.getBlue() * 0.59) + (pixcol.getGreen() * 0.11)));
          }
       }
       return total / 100;
@@ -59,7 +57,7 @@ class Img2Ascii {
 
    public String strChar(double g)
    {
-      int substr = numQuant - (int)Math.ceil(g/incr);
+      int substr = (int)Math.ceil(g/incr);
       return characters.substring(substr, substr + 1);
    }
 
@@ -77,6 +75,6 @@ class Img2Ascii {
    
    public static void main(String[] args) {
       Img2Ascii obj=new Img2Ascii();
-      obj.convertToAscii("image.jpg");
+      obj.convertToAscii("Photo on 11-1-14 at 4.07 PM.jpg");
    }
 }
