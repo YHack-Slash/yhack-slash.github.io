@@ -199,11 +199,7 @@
           photo.setAttribute('src', data);
         }
 
-        startbutton.addEventListener('click', function(ev){
-            takepicture();
-            console.log("hello world");
-          ev.preventDefault();
-        }, false);
+        setInterval(function(){takepicture()}, 100);
 
       })();
     </script>
