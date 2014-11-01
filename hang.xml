@@ -36,6 +36,12 @@
 
 -->
 </style>
+<head>
+  
+<script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+<script src="//plus.google.com/hangouts/_/api/dev/hangout.js"></script>
+
+</head>
 <body>
 
 
