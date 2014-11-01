@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
-
 class Img2Ascii {
 
    BufferedImage img;
@@ -29,11 +28,10 @@ class Img2Ascii {
       }
    
    
-      for (int i = 10; i <= img.getHeight(); i+=10)
+      for (int i = 0; i <= img.getHeight(); i+=10)
       {
-         for (int j = 10; j <= img.getWidth(); j+=10)
+         for (int j = 0; j <= img.getWidth(); j+=10)
          {
-            Color pixcol = new Color(img.getRGB(j, i));
             print(strChar(findAverage(img, j, i)));
          }
          try {
@@ -50,8 +48,10 @@ class Img2Ascii {
       double total = 0.;
       for (int i = x; i < x + 10; i++) {
          for (int j = y; j < y + 10; j++) {
-            if (i <= img.getWidth() && y <= img.getHeight())
+            if (i < img.getWidth() && y < img.getHeight()) {
+               Color pixcol = new Color(img.getRGB(i, j));
                total += (((pixcol.getRed() * 0.30) + (pixcol.getBlue() * 0.59) + (pixcol.getGreen() * 0.11)));
+            }
          }
       }
       return total / 100;
@@ -77,6 +77,6 @@ class Img2Ascii {
    
    public static void main(String[] args) {
       Img2Ascii obj=new Img2Ascii();
-      obj.convertToAscii("icon_smile2.png");
+      obj.convertToAscii("image.jpg");
    }
 }
