@@ -25,6 +25,7 @@
       var user = "Testing..."
       var asc = "Random characters"
       ref.push({user: user, text: asc, count: val});
+      $('#messagesDiv').val('');
       ref.on('child_added', function(snapshot) {
         var message = snapshot.val();
         displayChatMessage(message.user, message.text, message.count);
