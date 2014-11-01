@@ -72,6 +72,8 @@
         }
       );
 
+      console.log(video);
+
       video.addEventListener('canplay', function(ev){
         if (!streaming) {
           height = video.videoHeight / (video.videoWidth/width);
