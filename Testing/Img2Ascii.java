@@ -50,7 +50,11 @@ class Img2Ascii {
     }
     
     public int findAverage(BufferedImage img, int x, int y) {
-      for (
+      for (int i = x; i < x + 10; i++) {
+         for (int j = y; j < y + 10; j++) {
+         
+         }
+      }
 
 
     public String strChar(double g)
