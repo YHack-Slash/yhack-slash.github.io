@@ -29,15 +29,11 @@
       ref.on('child_added', function(snapshot) {
         var message = snapshot.val();
         displayChatMessage(message.user, message.text, message.count);
-      })
-      ref.set({user: user, text: asc, count: val});
+      });
     };
-    ref.on('child_added', function(snapshot) {
-      var message = snapshot.val();
-      displayChatMessage(message.user, message.text, message.count);
-    });
+
     function displayChatMessage(name, text, count) {
-      $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
+      $('<div/>').text(text).prepend($('<em/>').text(name+': ')).prepend($('<em/>').text(count+': ')).appendTo($('#messagesDiv'));
       $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
     };
 
