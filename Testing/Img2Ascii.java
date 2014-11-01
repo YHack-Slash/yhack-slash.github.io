@@ -8,9 +8,10 @@ class Img2Ascii {
    double pixval;
    PrintWriter prntwrt;
    FileWriter filewrt;
-   final String characters = "$@%&#*/\\|()1{}[]?-_+~<>!;:,\"^`'. ";
+   final String characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
    final int numQuant = characters.length() - 1;
    final double incr = 270.0/numQuant;
+   double totDens = 0.;
    
    public Img2Ascii() {
       try {
@@ -49,7 +50,7 @@ class Img2Ascii {
       for (int i = x; i < x + 10 && i < img.getWidth(); i++) {
          for (int j = y; j < y + 10 && j < img.getHeight(); j++) {
             Color pixcol = new Color(img.getRGB(i, j));
-            total += (((pixcol.getRed() * 0.30) + (pixcol.getBlue() * 0.59) + (pixcol.getGreen() * 0.11)));
+            total += (((pixcol.getRed() * 0.33) + (pixcol.getBlue() * 0.33) + (pixcol.getGreen() * 0.33)));
          }
       }
       return total / 100;
@@ -57,7 +58,7 @@ class Img2Ascii {
 
    public String strChar(double g)
    {
-      int substr = (int)Math.ceil(g/incr);
+      int substr = (int)Math.floor(g/incr);
       return characters.substring(substr, substr + 1);
    }
 
