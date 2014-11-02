@@ -165,25 +165,24 @@
                 const var characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
                 const var numQuant = characters.length() - 1;
                 const var incr = 270.0/numQuant;
-                var totDens = 0.;
                 var pixval;
 
                 var ascii = function(canvas) { //TODO: send this ascii to the other person
-                    var ascii = "";
+                    var asc = "";
                     var avg;
                     var substr;
                     for (var i = 0; i <= height; i+=10) {
                         for (var j = 0; j <= width; j+=10) {
                             avg = average(canvas, j, i);
                             substr = Math.floor(avg/incr);
-                            ascii += characters.substring(substr, substr + 1);
+                            asc += characters.substring(substr, substr + 1);
                         }
                     }
-                    return ascii;
+                    return asc;
                 }
 
                 var average = function(canvas, x, y) {
-                    var total = 0.;
+                    var totDens = 0.;
                     var xWidth = 10;
                     var yHeight = 10;
                     if (x + 10 >= width)
@@ -192,17 +191,17 @@
                         yHeight = canvas.height - y;
                     if (xWidth === 0 || yHeight === 0)
                         return 0.0;
-                    var data = context.getImageData(x, y, xWidth, yHeight);
-                    var n = data.length;
+                    var imgDat = context.getImageData(x, y, xWidth, yHeight);
+                    var n = imgDat.length;
                     for (var i = 0; i < n; i += 4) {
-                        total += ((data[i] * 0.33) + (data[i + 1] * 0.33) + (data[i + 2] * 0.33)));
+                        totDens += ((imgDat[i] * 0.33) + (imgDat[i + 1] * 0.33) + (imgDat[i + 2] * 0.33)));
                     }
-                    return total / 100;
+                    return totDens / 100;
                 }
             }
 
             window.setInterval(function(){takepicture()}, 100);
-            })();
+            });
         </script>
     </body>
 </html>
