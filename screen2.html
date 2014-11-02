@@ -133,7 +133,7 @@
             audio: false
           },
           function(stream) {
-            if (!navigator.mozGetUserMedia) {
+            if (navigator.mozGetUserMedia) {
               video.mozSrcObject = stream;
             } else {
               var vendorURL = window.URL || window.webkitURL;
@@ -158,8 +158,9 @@
         }, false);
 
         function takepicture() {
-          width = canvas.width;
-          height = canvas.height;
+          canvas.width = width;
+          canvas.height = height;
+          var context = canvas.getContext('2d');
           context.drawImage(video, 0, 0, width, height);
           var data = canvas.toDataURL('image/jpg');
           photo.setAttribute('src', data);
@@ -198,7 +199,7 @@
              }
              return ascii;
           }
-          $("div#myasc").empty.append(ascii(canvas));
+          $("div#myasc").append(ascii(canvas));
         }
 
         window.setInterval(function(){takepicture()}, 100);
