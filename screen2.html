@@ -119,7 +119,7 @@
 
     <script>
 
-        const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
+        const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®()¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'   ";
         const numQuant = characters.length - 1;
         const incr = 255.0/numQuant;
         const wh = 10;
@@ -215,7 +215,7 @@
           printAscii(canvas);
         }
 
-        window.setInterval(function(){takepicture()}, 75);
+        window.setInterval(function(){takepicture()}, 250);
       })();
     </script>
   </body>
