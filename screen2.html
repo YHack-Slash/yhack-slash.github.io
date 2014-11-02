@@ -118,6 +118,10 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
     <script>
+
+        const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
+        const numQuant = characters.length - 1;
+        const incr = 255.0/numQuant;
       //WebRTC
       (function() {
         var canvas = document.querySelector("#canvas");
@@ -169,20 +173,16 @@
           context.drawImage(video, 0, 0, width, height);
           var data = canvas.toDataURL('image/jpg');
           photo.setAttribute('src', data);
-
-          const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
-          const numQuant = characters.length - 1;
-          const incr = 255.0/numQuant;
           var totDens = 0.;
           var pixval;
 
           var average = function(canvas, x, y) {
              var total = 0.;
-             var xWidth = 1;
-             var yHeight = 1;
-             if (x + 1 >= canvas.width)
+             var xWidth = 10;
+             var yHeight = 10;
+             if (x + 10 >= canvas.width)
                 xWidth = canvas.width - x;
-             if (y + 1 >= canvas.height)
+             if (y + 10 >= canvas.height)
                 yHeight = canvas.height - y;
              if (xWidth === 0 || yHeight === 0)
                 return 0.0;
@@ -190,7 +190,7 @@
              var n = data2.length;
              for (var i = 0; i < n; i += 4)
                 total +=  ((data2[i] * 0.33) + (data2[i + 1] * 0.33) + (data2[i + 2] * 0.33));
-             return (total);
+             return (total) / (100);
           }
 
           function printAscii(canvas) { //TODO: send this ascii to the other person
