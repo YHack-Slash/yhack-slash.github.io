@@ -199,8 +199,10 @@
                 for (var j = 0; j <= canvas.width; j+=10) {
                    avg = average(canvas, j, i);
                    substr = Math.floor(avg/incr);
+                   console.log(characters.substring(substr, substr + 1));
                    $(".myasc").append(characters.substring(substr, substr + 1));
                 }
+                console.log("\n");
                 $(".myasc").append("\n");
              }
           }
