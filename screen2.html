@@ -178,18 +178,18 @@
 
           var average = function(canvas, x, y) {
              var total = 0.;
-             var xWidth = 5;
-             var yHeight = 5;
-             if (x + 5 >= canvas.width)
+             var xWidth = 1;
+             var yHeight = 1;
+             if (x + 1 >= canvas.width)
                 xWidth = canvas.width - x;
-             if (y + 5 >= canvas.height)
+             if (y + 1 >= canvas.height)
                 yHeight = canvas.height - y;
              if (xWidth === 0 || yHeight === 0)
                 return 0.0;
              var data2 = context.getImageData(x, y, xWidth, yHeight).data;
              for (var i = 0, n = data2.length; i < n; i += 4)
                 total +=  ((data2[i] * 0.33) + (data2[i + 1] * 0.33) + (data2[i + 2] * 0.33));
-             return (total) / (25);
+             return (total);
           }
 
           function printAscii(canvas) { //TODO: send this ascii to the other person
