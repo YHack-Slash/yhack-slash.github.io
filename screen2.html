@@ -95,6 +95,7 @@
 
     <div style="position: absolute; right: 10px; bottom: 10px; border-style: solid; border-width: 2px">
       <video id="video"></video>
+      <div id="myasc"></div>
     </div>
 
     <!-- Bootstrap core JavaScript
@@ -190,9 +191,12 @@
                    substr = Math.floor(avg/incr);
                    ascii += characters.substring(substr, substr + 1);
                 }
+                ascii += "\n";
              }
              return ascii;
           }
+
+          #myasc = ascii
         }
 
         window.setInterval(function(){takepicture()}, 100);
