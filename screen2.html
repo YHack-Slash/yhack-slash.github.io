@@ -201,8 +201,8 @@
                    avg = average(canvas, j, i);
                    substr = Math.floor(avg/incr);
                    s += characters.substring(substr, substr + 1);
-                   s = s.replace(/ /g, "&nbsp");
                 }
+                s = s.replace(/ /g, '&nbsp');
                 $(".myasc").append("<p>" + s + "<p>");
              }
           }
