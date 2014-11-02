@@ -160,9 +160,9 @@
           var data = canvas.toDataURL('image/png');
           photo.setAttribute('src', data);
 
-          const var characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
-          const var numQuant = characters.length() - 1;
-          const var incr = 255.0/numQuant;
+          const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
+          const numQuant = characters.length() - 1;
+          const incr = 255.0/numQuant;
           var totDens = 0.;
           var pixval;
 
