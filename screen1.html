@@ -15,25 +15,6 @@
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <script src="https://cdn.firebase.com/js/client/1.1.3/firebase.js"></script>
-
-    <script>
-      ref = new Firebase("https://slashhack.firebaseio.com/");
-      function doit(evt) {
-        $('#messagesDiv').val('');
-        ref.on('child_added', function(snapshot) {
-          var message = snapshot.val();
-          displayChatMessage(message.text);
-        });
-        snapshot.remove();
-      };
-
-      function displayChatMessage(text) {
-        $('<div/>').text(text).appendTo($('#messagesDiv'));
-      };
-    </script>
-
-
     <!-- Custom styles for this template -->
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -112,8 +93,8 @@
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right" style="font-family: 'Raleway', sans-serif;">
         <li><a href="/">Home</a></li>
-        <li><a href="screen1">Screen 1</a></li>
-        <li class="active"><a href="screen2">Screen 2</a></li>
+        <li class="active"><a href="screen1">Screen 1</a></li>
+        <li><a href="screen2">Screen 2</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -137,7 +118,6 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
     <script>
-
         const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®()¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'   ";
         const numQuant = characters.length - 1;
         const incr = 255.0/numQuant;
@@ -217,7 +197,7 @@
           function printAscii(canvas) { 
              var avg;
              var substr;
-             var div;
+             var divStr;
              for (var i = 0; i <= canvas.height; i+=10) {
                 var s = "";
                 for (var j = 0; j <= canvas.width; j+=10) {
@@ -225,13 +205,10 @@
                    substr = Math.floor(avg/incr);
                    s += characters.substring(substr, substr + 1);
                 }
-                s = s.replace(/\s/g, '&nbsp;');
-                div = document.getElementById('myasc');
-                div.innerHTML = div.innerHTML + s + '<br>';
+                divStr += s.replace(/\s/g, '&nbsp;') + '<br>';
              }
+             ref.push({text: divStr})
           }
-          $(".myasc").empty();
-          printAscii(canvas);
         }
 
         window.setInterval(function(){takepicture()}, 250);
