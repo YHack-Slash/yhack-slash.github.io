@@ -1,0 +1,10 @@
+push.sh
+
+# IDE meta files
+.project
+.settings
+sample-webrtc-web.esproj
+
+# Temporary editors files
+*~
+*.DS_Store

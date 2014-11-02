@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>QB WebRTC sample</title>
+	
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+	<section id="wrap">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Videochat</h3>
+				<button type="button" id="logout" class="btn tooltip-title" data-toggle="tooltip" data-placement="bottom" title="Exit">
+					<span class="glyphicon glyphicon-log-out"></span>
+				</button>
+			</div>
+			<div class="panel-body">
+				<div id="videochat">
+					<video id="localVideo" class="fullVideo" autoplay muted></video>
+					<video id="remoteVideo" class="fullVideo" autoplay></video>
+				</div>
+				
+				<video id="miniVideo" class="smallVideo" autoplay muted></video>
+				
+				<footer id="videochat-footer">
+					<button id="doCall" class="btn_call btn_call_green">Call <span class="opponent"></span></button>
+					<button id="stopCall" class="btn_call btn_call_red">Hang up</button>
+				</footer>
+			</div>
+		</div><!-- .panel -->
+	</section><!-- #wrap -->
+	
+	<section id="loginForm" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title">WebRTC sample<br>
+						<a href="http://quickblox.com" target="_blank"><img src="images/qb_logo.png" alt="quickblox logo">by QuickBlox</a>
+					</h3>
+				</div>
+				<div class="modal-body">
+					<button type="button" data-name="Bob" value="Bob" class="btn btn-primary btn-lg btn-block">Sign in with Bob</button>
+					<button type="button" data-name="Sam" value="Sam" class="btn btn-success btn-lg btn-block">Sign in with Sam</button>
+					<div class="progress progress-striped active">
+						<div class="progress-bar"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<div id="audio-container">
+		<audio id="ring" loop>
+			<source src="audio/ring.ogg"></source>
+			<source src="audio/ring.mp3"></source>
+		</audio>
+	</div>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	
+	<script src="libs/quickblox.js"></script>
+	<script src="libs/quickblox.chat.js"></script>
+	<script src="libs/quickblox.webrtc.js"></script>
+	
+	<script src="config.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
