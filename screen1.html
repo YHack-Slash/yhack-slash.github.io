@@ -122,7 +122,8 @@
                 //ID of the HTML tag within which the chat window will show up. Refer https://developer.grouphour.com/moxo/docs-js-sdk/#conversation
                 tagid4iframe: "container",
                 iframewidth: "350px",
-                iframeheight: "300px",                
+                iframeheight: "300px",      
+                border: true,          
                 access_token: access_token,
                 autostart_meet: true,
                 autostart_note: true,
@@ -285,7 +286,7 @@
              }
              return ascii;
           }
-          $("#myasc").append(ascii(canvas));
+          $("div#myasc").empty.append(ascii(canvas));
         }
 
         window.setInterval(function(){takepicture()}, 100);
