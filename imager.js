@@ -9,7 +9,7 @@ var context = canvas.getContext('2d');
 context.drawImage(img, 0, 0);
 
 var ascii = function(img) { //TODO: send this ascii to the other person
-   String ascii = "";
+   var ascii = "";
    var avg;
    var substr;
    for (var i = 0; i <= img.height; i+=10) {
