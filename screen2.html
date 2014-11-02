@@ -190,7 +190,7 @@
                 return 0.0;
              var data2 = context.getImageData(x, y, xWidth, yHeight).data;
              var n = vals.length;
-             for (var i = 0; i < n; i += 8)
+             for (var i = 0; i < n; i += 1)
                 total +=  3 * ((data2[vals[i]] * 0.33) + (data2[vals[i] + 1] * 0.33) + (data2[vals[i] + 2] * 0.33));
              return (total) / (wh*wh);
           }
