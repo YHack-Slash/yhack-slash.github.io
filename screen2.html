@@ -100,7 +100,7 @@
     </div>
 
     <br><br><br>
-    <div id="myasc" style="color: black;"></div>
+    <div class="myasc" style="color: black;"></div>
 
     <div style="position: absolute; right: 10px; bottom: 10px; border-style: solid; border-width: 2px">
       <video id="video"></video>
@@ -205,7 +205,10 @@
                 }
                 s = s.replace(/ /g, '&nbsp');
                 div = document.getElementById('myasc');
-                div.innerHTML = div.innerHTML + s + '\n';
+                div.innerHTML = div.innerHTML + s + '<br>';
+
+                //s = s.replace(/ /g, "&nbsp");
+                //$(".myasc").append("<p>" + s + "<p>");
              }
           }
           $(".myasc").empty();
