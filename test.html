@@ -67,7 +67,46 @@
             Moxtra.setup(init_options);
         }
     </script>
-           
+
+    <!-- Start Chat Function -->
+      <script type="text/javascript">
+        function start_chat (access_token) {            
+            var chat_options = {
+                //unique id of the users who will be part of the chat. These users should already exist in Moxtra.
+                unique_id: "unique_user_id_2,unique_user_id_3",  
+                iframe: true,
+                //ID of the HTML tag within which the chat window will show up. Refer https://developer.grouphour.com/moxo/docs-js-sdk/#conversation
+                tagid4iframe: "container",
+                iframewidth: "1000px",
+                iframeheight: "750px",                
+                access_token: access_token,
+                autostart_meet: true,
+                autostart_note: true,
+                extension: { "show_dialogs": { "member_invite": true } },
+                start_chat: function(event) {
+                    console.log("Chat started binder ID: " + event.binder_id);
+                    //Your application server can upload files to draw using the binder_id and access_token
+                },
+                start_meet: function(event) {
+                    console.log("Meet started session key: " + event.session_key + " session id: " + event.session_id);
+                },
+                end_meet: function(event) {
+                    console.log("Meet end event");
+                },
+                invite_member: function(event) {
+                    console.log("Invite member into binder Id: " + event.binder_id);
+                },
+                request_note: function(event) {
+                    console.log("Note start request");
+                },
+                error: function(event) {
+                    console.log("Chat error code: " + event.error_code + " error message: " + event.error_message);
+                }
+            };            
+            Moxtra.chat(chat_options);
+        }
+      </script>
+
   <style>
     body {
       font-family: 'Droid Sans', sans-serif;
@@ -136,7 +175,7 @@
     </div>
 
     <div style="position: absolute; left: 10px; bottom: 10px; border-style: solid; border-width: 2px">
-      <h3><a id="getToken" href="javascript:get_token();">Create User and Get Access Token</a></h3>
+      <h3><a id="getToken" href="javascript:get_token();">Chat</a></h3>
     </div>
 
     <div style="position: absolute; right: 10px; bottom: 10px; border-style: solid; border-width: 2px">
