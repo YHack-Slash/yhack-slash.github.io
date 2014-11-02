@@ -176,7 +176,7 @@
                 xWidth = canvas.width - x;
              if (y + 10 >= canvas.height)
                 yHeight = canvas.height - y;
-              if (x === 0 || y === 0)
+            if (xWidth === 0 || yHeight === 0)
                 return 0.0;
              var data2 = context.getImageData(x, y, xWidth, yHeight).data;
              for (var i = 0, n = data2.length; i < n; i += 4)
