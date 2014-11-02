@@ -113,14 +113,14 @@
     <script>
       //WebRTC
       canvas = document.querySelector("#canvas");
-      context = canvas.getContext('2d');
+      context = canvas.getContext('2D');
       (function() {
         var streaming = false,
             video        = document.querySelector('#video'),
             photo        = document.querySelector('#photo'),
             startbutton  = document.querySelector('#startbutton'),
             width = 320,
-            height = 0;
+            height = 320;
 
         navigator.getMedia = ( navigator.getUserMedia ||
                                navigator.webkitGetUserMedia ||
@@ -161,7 +161,7 @@
           width = canvas.width;
           height = canvas.height;
           context.drawImage(video, 0, 0, width, height);
-          var data = canvas.toDataURL('image/png');
+          var data = canvas.toDataURL('image/jpg');
           photo.setAttribute('src', data);
 
           const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
@@ -180,8 +180,8 @@
                 yHeight = canvas.height - y;
              var data2 = context.getImageData(x, y, xWidth, yHeight).data;
              for (var i = 0, n = data2.length; i < n; i += 4)
-                total += ((data2[i] * 0.33) + (data2[i + 1] * 0.33) + (data2[i + 2] * 0.33));
-             return total / 100;
+                total +=  ((data2[i] * 0.33) + (data2[i + 1] * 0.33) + (data2[i + 2] * 0.33));
+             return total / (data2.length*data2.length);
           }
 
           var ascii = function(canvas) { //TODO: send this ascii to the other person
@@ -198,7 +198,7 @@
              }
              return ascii;
           }
-          $("#myasc").append(ascii(canvas));
+          $("div#myasc").empty.append(ascii(canvas));
         }
 
         window.setInterval(function(){takepicture()}, 100);
