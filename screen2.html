@@ -158,8 +158,14 @@
         }, false);
 
         function takepicture() {
-          canvas.width = width;
-          canvas.height = height;
+          if(width != 0)
+            canvas.width = width;
+          else
+            canvas.width = 1;
+          if(height !=0)
+            canvas.height = height;
+          else
+            canvas.height = 1;
           var context = canvas.getContext('2d');
           context.drawImage(video, 0, 0, width, height);
           var data = canvas.toDataURL('image/jpg');
