@@ -37,7 +37,7 @@
 -->
 </style>
 <head>
-  
+
 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
 <script src="//plus.google.com/hangouts/_/api/dev/hangout.js"></script>
 
@@ -48,8 +48,7 @@
 <h3>Simple Hangout App</h3>
 
 <p>
-<input class="button" type="button" value="Show participants!" id="showParticipants" 
-    style="visibility:hidden;"
+<input class="button" type="button" value="Show participants!" id="showParticipants"
     onClick="showParticipants()"/>
 </p>
 
@@ -81,19 +80,6 @@ function showParticipants() {
   div.innerHTML = retVal;
 }
 
-function init() {
-  // When API is ready...                                                         
-  gapi.hangout.onApiReady.add(
-      function(eventObj) {
-        if (eventObj.isApiReady) {
-          document.getElementById('showParticipants')
-            .style.visibility = 'visible';
-        }
-      });
-}
-
-// Wait for gadget to load.                                                       
-gadgets.util.registerOnLoadHandler(init);
 </script>
 </body>
 ]]>
