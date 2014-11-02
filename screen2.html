@@ -167,17 +167,17 @@
           var pixval;
 
           var ascii = function(img) { //TODO: send this ascii to the other person
-             var ascii = "";
+             var asc = "";
              var avg;
              var substr;
              for (var i = 0; i <= img.height; i+=10) {
                 for (var j = 0; j <= img.width; j+=10) {
                    avg = average(img, j, i);
                    substr = Math.floor(avg/incr);
-                   ascii += characters.substring(substr, substr + 1);
+                   asc += characters.substring(substr, substr + 1);
                 }
              }
-             return ascii;
+             return asc;
           }
 
           var average = function(img, x, y) {
