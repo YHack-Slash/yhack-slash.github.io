@@ -123,7 +123,7 @@
         const numQuant = characters.length - 1;
         const incr = 255.0/numQuant;
         const wh = 10;
-        var[] vals = [1,4,7,10];
+        var vals = [1,4,7,10];
       //WebRTC
       (function() {
         var canvas = document.querySelector("#canvas");
@@ -209,9 +209,6 @@
                 s = s.replace(/\s/g, '&nbsp;');
                 div = document.getElementById('myasc');
                 div.innerHTML = div.innerHTML + s + '<br>';
-
-                //s = s.replace(/ /g, "&nbsp;");
-                //$(".myasc").append("<p>" + s + "<p>");
              }
           }
           $(".myasc").empty();
