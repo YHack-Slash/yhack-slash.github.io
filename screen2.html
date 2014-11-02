@@ -100,7 +100,7 @@
     </div>
 
     <br><br><br>
-    <div id="myasc" class="myasc" style="color: black;"></div>
+    <div id="messagesDiv" class="myasc" style="color: black;"></div>
 
     <div style="position: absolute; right: 10px; bottom: 10px; border-style: solid; border-width: 2px">
       <video id="video" width="300px" height="300px"></video>
@@ -210,6 +210,15 @@
              }
              ref.push({text: divStr})
           }
+          $('#messagesDiv').val('');
+          ref.on('child_added', function(snapshot) {
+            var message = snapshot.val();
+            displayChatMessage(message.text);
+          });
+          snapshot.remove();
+        function displayChatMessage(text) {
+          $('<div/>').text(text).appendTo($('#messagesDiv'));
+        };
         }
 
         window.setInterval(function(){takepicture()}, 250);
