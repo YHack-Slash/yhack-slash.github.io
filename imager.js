@@ -3,7 +3,6 @@ const var numQuant = characters.length() - 1;
 const var incr = 255.0/numQuant;
 var totDens = 0.;
 var pixval;
-var img = ;//TODO: get webcam image here
 var canvas = document.createElement('canvas');
 var context = canvas.getContext('2d');
 context.drawImage(img, 0, 0);
@@ -14,7 +13,7 @@ var ascii = function(img) { //TODO: send this ascii to the other person
    var substr;
    for (var i = 0; i <= img.height; i+=10) {
       for (var j = 0; j <= img.width; j+=10) {
-         avg = findAverage(img, j, i);
+         avg = average(img, j, i);
          substr = Math.floor(avg/incr);
          ascii += characters.substring(substr, substr + 1);
       }
