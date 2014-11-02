@@ -170,13 +170,13 @@
 
           var average = function(canvas, x, y) {
              var total = 0.;
-             var xWidth = 10;
-             var yHeight = 10;
+             var xWidth = 11;
+             var yHeight = 11;
              if (x + 10 >= canvas.width)
                 xWidth = canvas.width - x;
              if (y + 10 >= canvas.height)
                 yHeight = canvas.height - y;
-              console.log(x + ", " + y + ", " + xWidth + ", " + yHeight);
+             console.log(x + ", " + y + ", " + xWidth + ", " + yHeight);
              var data2 = context.getImageData(x, y, xWidth, yHeight).data;
              for (var i = 0, n = data2.length; i < n; i += 4)
                 total +=  ((data2[i] * 0.33) + (data2[i + 1] * 0.33) + (data2[i + 2] * 0.33));
