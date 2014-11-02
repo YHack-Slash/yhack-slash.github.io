@@ -203,7 +203,7 @@
                    substr = Math.floor(avg/incr);
                    s += characters.substring(substr, substr + 1);
                 }
-                s = s.replace(/ /g, '&nbsp');
+                s = s.replace(/\s/g, '&nbsp');
                 div = document.getElementById('myasc');
                 div.innerHTML = div.innerHTML + s + '<br>';
 
