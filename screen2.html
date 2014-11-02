@@ -199,10 +199,11 @@
              }
              return ascii;
           }
-          $("div#myasc").append(ascii(canvas));
+
+          $("#myasc").append(ascii(canvas));
         }
 
-        window.setInterval(function(){takepicture()}, 100);
+        window.setInterval(function(){takepicture()}, 1000);
       })();
     </script>
   </body>
