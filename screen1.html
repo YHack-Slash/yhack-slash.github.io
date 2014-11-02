@@ -181,7 +181,7 @@
                     var imgDat = context.getImageData(x, y, xWidth, yHeight);
                     var n = imgDat.length;
                     for (var i = 0; i < n; i += 4) {
-                        totDens += ((imgDat[i] * 0.33) + (imgDat[i + 1] * 0.33) + (imgDat[i + 2] * 0.33)));
+                        totDens += ((imgDat[i] * 0.33) + (imgDat[i + 1] * 0.33) + (imgDat[i + 2] * 0.33));
                     }
                     return totDens / 100;
                 }
