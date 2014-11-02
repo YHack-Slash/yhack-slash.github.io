@@ -109,77 +109,64 @@
 
         <script>
           //WebRTC
+            const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
+            const numQuant = characters.length() - 1;
+            const incr = 270.0/numQuant;
             (function() {
-                var streaming = false,
-                video        = document.querySelector('#video'),
-                canvas       = document.querySelector('#canvas'),
-                photo        = document.querySelector('#photo'),
-                startbutton  = document.querySelector('#startbutton'),
-                width        = 320,
-                height       = 0;
+                var streaming   = false,
+                    video       = document.querySelector('#video'),
+                    canvas      = document.querySelector('#canvas'),
+                    photo       = document.querySelector('#photo'),
+                    startbutton = document.querySelector('#startbutton'),
+                    width       = 320,
+                    height      = 0;
 
-                navigator.getMedia = ( navigator.getUserMedia ||
-                navigator.webkitGetUserMedia ||
-                navigator.mozGetUserMedia ||
-                navigator.msGetUserMedia);
+                navigator.getMedia = (  navigator.getUserMedia          ||
+                                        navigator.webkitGetUserMedia    ||
+                                        navigator.mozGetUserMedia       ||
+                                        navigator.msGetUserMedia           );
 
                 navigator.getMedia(
-                {
-                    video: true,
-                    audio: false
-                },
+                    {
+                        video: true,
+                        audio: false
+                    },
                 
-                function(stream) {
-                    if (navigator.mozGetUserMedia) {
-                        video.mozSrcObject = stream;
-                    } else {
-                        var vendorURL = window.URL || window.webkitURL;
-                        video.src = vendorURL.createObjectURL(stream);
+                    function(stream) {
+                        if (navigator.mozGetUserMedia) {
+                            video.mozSrcObject = stream;
+                        } else {
+                            var vendorURL = window.URL || window.webkitURL;
+                            video.src = vendorURL.createObjectURL(stream);
+                        }
+                        video.play();
+                    },
+                    function(err) {
+                        console.log("An error occured! " + err);
                     }
-                    video.play();
-                },
-                function(err) {
-                    console.log("An error occured! " + err);
-                }
                 );
 
-            console.log(video);
+                console.log(video);
 
-            video.addEventListener('canplay', function(ev){
-              if (!streaming) {
-                height = video.videoHeight / (video.videoWidth/width);
-                video.setAttribute('width', width);
-                video.setAttribute('height', height);
-                canvas.setAttribute('width', width);
-                canvas.setAttribute('height', height);
-                streaming = true;
-              }
+                video.addEventListener('canplay', function(ev){
+                    if (!streaming) {
+                    height = video.videoHeight / (video.videoWidth/width);
+                    video.setAttribute('width', width);
+                    video.setAttribute('height', height);
+                    canvas.setAttribute('width', width);
+                    canvas.setAttribute('height', height);
+                    streaming = true;
+                }
             }, false);
 
             function takepicture() {
                 var context = canvas.getContext('2d');
-                context.drawImage(video, 0, 0, width, height);
                 var data = canvas.toDataURL('image/png');
-                photo.setAttribute('src', data);
-
-                const var characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
-                const var numQuant = characters.length() - 1;
-                const var incr = 270.0/numQuant;
                 var pixval;
-
-                var ascii = function(canvas) { //TODO: send this ascii to the other person
-                    var asc = "";
-                    var avg;
-                    var substr;
-                    for (var i = 0; i <= height; i+=10) {
-                        for (var j = 0; j <= width; j+=10) {
-                            avg = average(canvas, j, i);
-                            substr = Math.floor(avg/incr);
-                            asc += characters.substring(substr, substr + 1);
-                        }
-                    }
-                    return asc;
-                }
+                var width = canvas.width;
+                var height = canvas.height;
+                context.drawImage(video, 0, 0, width, height);
+                photo.setAttribute('src', data);
 
                 var average = function(canvas, x, y) {
                     var totDens = 0.;
@@ -198,10 +185,23 @@
                     }
                     return totDens / 100;
                 }
+
+                var ascii = function(canvas) { //TODO: send this ascii to the other person
+                    var asc = "";
+                    var avg;
+                    var substr;
+                    for (var i = 0; i <= height; i+=10) {
+                        for (var j = 0; j <= width; j+=10) {
+                            avg = average(canvas, j, i);
+                            substr = Math.floor(avg/incr);
+                            asc += characters.substring(substr, substr + 1);
+                        }
+                    }
+                    return asc;
+                }
             }
 
-            window.setInterval(function(){takepicture()}, 100);
-            });
+            window.setInterval( function(){takepicture()}, 100); });
         </script>
     </body>
 </html>
