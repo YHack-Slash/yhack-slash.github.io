@@ -118,7 +118,7 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
     <script>
-
+        ref = new Firebase("https://slashhack.firebaseio.com/");
         const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®()¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'   ";
         const numQuant = characters.length - 1;
         const incr = 255.0/numQuant;
@@ -198,7 +198,7 @@
           function printAscii(canvas) { 
              var avg;
              var substr;
-             var div;
+             var divStr;
              for (var i = 0; i <= canvas.height; i+=10) {
                 var s = "";
                 for (var j = 0; j <= canvas.width; j+=10) {
@@ -206,13 +206,10 @@
                    substr = Math.floor(avg/incr);
                    s += characters.substring(substr, substr + 1);
                 }
-                s = s.replace(/\s/g, '&nbsp;');
-                div = document.getElementById('myasc');
-                div.innerHTML = div.innerHTML + s + '<br>';
+                divStr += s.replace(/\s/g, '&nbsp;') + '<br>';
              }
+             ref.push({text: divStr})
           }
-          $(".myasc").empty();
-          printAscii(canvas);
         }
 
         window.setInterval(function(){takepicture()}, 250);
