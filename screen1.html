@@ -121,7 +121,7 @@
                 iframe: true,
                 //ID of the HTML tag within which the chat window will show up. Refer https://developer.grouphour.com/moxo/docs-js-sdk/#conversation
                 tagid4iframe: "container",
-                iframewidth: "1000px",
+                iframewidth: "250px",
                 iframeheight: "750px",                
                 access_token: access_token,
                 autostart_meet: true,
@@ -175,17 +175,20 @@
     <br><br><br><br><br><br>
     <div id="myasc" style="color: black; z-index: 50;"></div>
 
+    <div style="position: absolute; left: 10px; bottom: 10px; border-style: solid; border-width: 2px">
+      <canvas id="canvas" width="300px" height="300px"><img src="http://placekitten.com/g/320/261" id="photo" alt="photo"></canvas>
+    </div>
+
+    <div style="position: absolute; left: 10px; bottom: 10px; border-style: solid; border-width: 2px">
+          <img src="http://placekitten.com/g/320/261" id="photo" alt="photo" width="300px" height="300px">
+    </div>
+
     <div style="position: absolute; right: 10px; bottom: 10px; border-style: solid; border-width: 2px">
       <video id="video"></video>
     </div>
 
     <div style="position: absolute; left: 10px; bottom: 10px; border-style: solid; border-width: 2px">
       <h3><a id="getToken" href="javascript:get_token();">Moxtra Chat</a></h3>
-    </div>
-
-    <div style="position: absolute; right: -1000px;">
-      <canvas id="canvas" width="300px" height="300px"><img src="http://placekitten.com/g/320/261" id="photo" alt="photo"></canvas>
-      <img src="http://placekitten.com/g/320/261" id="photo" alt="photo" width="300px" height="300px">
     </div>
 
     <!-- Bootstrap core JavaScript
