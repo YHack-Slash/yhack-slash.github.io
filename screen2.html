@@ -195,6 +195,7 @@
           function printAscii(canvas) { //TODO: send this ascii to the other person
              var avg;
              var substr;
+             var div;
              for (var i = 0; i <= canvas.height; i+=10) {
                 var s = "";
                 for (var j = 0; j <= canvas.width; j+=10) {
@@ -203,7 +204,8 @@
                    s += characters.substring(substr, substr + 1);
                 }
                 s = s.replace(/ /g, '&nbsp');
-                $(".myasc").append("<p>" + s + "<p>");
+                div = document.getElementById('myasc');
+                div.innerHTML = div.innerHTML + s + '\n';
              }
           }
           $(".myasc").empty();
