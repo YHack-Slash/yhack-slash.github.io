@@ -66,7 +66,7 @@
             }
 
             .about {
-                color:#DDDDDD; 
+                color:#DDDDDD;
                 padding: 0px 60px 18.5% 30px;
             }
         </style>
@@ -110,7 +110,7 @@
         <script>
           //WebRTC
             const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
-            const numQuant = characters.length() - 1;
+            const numQuant = characters.length - 1;
             const incr = 270.0/numQuant;
             (function() {
                 var streaming   = false,
@@ -196,6 +196,7 @@
                             substr = Math.floor(avg/incr);
                             asc += characters.substring(substr, substr + 1);
                         }
+                        asc += "\n";
                     }
                     return asc;
                 }
