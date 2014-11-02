@@ -133,7 +133,7 @@
             audio: false
           },
           function(stream) {
-            if (navigator.mozGetUserMedia) {
+            if (!navigator.mozGetUserMedia) {
               video.mozSrcObject = stream;
             } else {
               var vendorURL = window.URL || window.webkitURL;
