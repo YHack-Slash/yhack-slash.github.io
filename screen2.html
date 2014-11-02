@@ -122,12 +122,14 @@
         const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
         const numQuant = characters.length - 1;
         const incr = 255.0/numQuant;
+        const wh = 10;
+        var[] vals = [1,4,7,10];
       //WebRTC
       (function() {
         var canvas = document.querySelector("#canvas");
         var context = canvas.getContext('2D');
         var streaming = false,
-            video        = document.querySelector('#video'),
+            video     = document.querySelector('#video'),
             width = 600,
             height = 600;
 
@@ -158,10 +160,10 @@
         video.addEventListener('canplay', function(ev){
           if (!streaming) {
             height = video.videoHeight / (video.videoWidth/width);
-            video.setAttribute('width', 300);
-            video.setAttribute('height', 300);
-            canvas.setAttribute('width', 300);
-            canvas.setAttribute('height', 300);
+            video.setAttribute('width', 250);
+            video.setAttribute('height', 250);
+            canvas.setAttribute('width', 250);
+            canvas.setAttribute('height', 250);
             streaming = true;
           }
         }, false);
@@ -178,22 +180,22 @@
 
           var average = function(canvas, x, y) {
              var total = 0.;
-             var xWidth = 10;
-             var yHeight = 10;
-             if (x + 10 >= canvas.width)
-                xWidth = canvas.width - x;
-             if (y + 10 >= canvas.height)
-                yHeight = canvas.height - y;
+             var xWidth = wh;
+             var yHeight = wh
+             if (x + wh >= width)
+                xWidth = width - x;
+             if (y + wh >= height)
+                yHeight = height - y;
              if (xWidth === 0 || yHeight === 0)
                 return 0.0;
              var data2 = context.getImageData(x, y, xWidth, yHeight).data;
-             var n = data2.length;
-             for (var i = 0; i < n; i += 4)
-                total +=  ((data2[i] * 0.33) + (data2[i + 1] * 0.33) + (data2[i + 2] * 0.33));
-             return (total) / (100);
+             var n = vals.length;
+             for (var i = 0; i < n; i += 8)
+                total +=  3 * ((data2[vals[i]] * 0.33) + (data2[vals[i] + 1] * 0.33) + (data2[vals[i] + 2] * 0.33));
+             return (total) / (wh*wh);
           }
 
-          function printAscii(canvas) { //TODO: send this ascii to the other person
+          function printAscii(canvas) { 
              var avg;
              var substr;
              var div;
