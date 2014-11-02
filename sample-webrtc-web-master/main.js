@@ -348,3 +348,34 @@ function stopRing(popups) {
 	if (Object.keys(popups).length == 0 || Object.keys(popups).length == 1)
 		audio.ring.pause();
 }
+
+var chatService, signaling;
+ 
+chatService = new QBChat({
+	onConnectSuccess: onConnectSuccess
+});
+ 
+/* ... */
+ 
+function onConnectSuccess() {
+	signaling = new QBSignaling(chatService, params);
+}
+
+var videoChat = new QBVideoChat(signaling, params);
+
+
+params = {
+	constraints: {audio: true},
+	onGetUserMediaSuccess: getMediaSuccess,
+	onGetUserMediaError: getMediaError
+};
+ 
+videoChat = new QBVideoChat(signaling, params);
+ 
+/* ... */
+ 
+var extraParams = {
+	callType: 2
+};
+ 
+videoChat.call(recipientID, extraParams);
