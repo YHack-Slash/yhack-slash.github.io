@@ -71,8 +71,7 @@
       .myasc {
         width: 100%;
         height: 1000px;
-        font-size: 12pt;
-        background-color; #000000;
+        font-size: 8pt;
       }
     </style>
   </head>
@@ -200,13 +199,10 @@
                    avg = average(canvas, j, i);
                    substr = Math.floor(avg/incr);
                    s += characters.substring(substr, substr + 1);
-                   $(".myasc").append(characters.substring(substr, substr + 1));
                 }
-                console.log(s);
-                $(".myasc").append("\n");
+                $(".myasc").append("<p>" + s + "<p>");
              }
           }
-
           $(".myasc").empty();
           printAscii(canvas);
         }
