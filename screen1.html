@@ -15,6 +15,11 @@
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> FETCH_HEAD
     <!-- Custom styles for this template -->
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -100,7 +105,7 @@
     </div>
 
     <br><br><br>
-    <div id="myasc" class="myasc" style="color: black;"></div>
+    <div id="messagesDiv" class="myasc" style="color: black;"></div>
 
     <div style="position: absolute; right: 10px; bottom: 10px; border-style: solid; border-width: 2px">
       <video id="video" width="300px" height="300px"></video>
@@ -117,7 +122,14 @@
     <script src="dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
+<<<<<<< HEAD
     <script>
+=======
+    <script src="https://cdn.firebase.com/js/client/1.1.3/firebase.js"></script>
+
+    <script>
+        ref = new Firebase("https://slashhack.firebaseio.com/tab1");
+>>>>>>> FETCH_HEAD
         const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®()¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'   ";
         const numQuant = characters.length - 1;
         const incr = 255.0/numQuant;
@@ -207,9 +219,26 @@
                 }
                 divStr += s.replace(/\s/g, '&nbsp;') + '<br>';
              }
+<<<<<<< HEAD
              ref.push({text: divStr})
           }
+=======
+             console.log(divStr)
+             ref.push({text: divStr})
+          }
+          $('#messagesDiv').val('');
+          ref.on('child_added', function(snapshot) {
+            var message = snapshot.val();
+            displayChatMessage(message.text);
+            snapshot.remove();
+          });
+        function displayChatMessage(text) {
+          $('<div/>').text(text).appendTo($('#messagesDiv'));
+        };
+
+>>>>>>> FETCH_HEAD
         }
+
 
         window.setInterval(function(){takepicture()}, 250);
       })();
