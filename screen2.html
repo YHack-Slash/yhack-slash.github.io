@@ -15,120 +15,6 @@
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-
-    <script>
-        const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®()¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'   ";
-        const numQuant = characters.length - 1;
-        const incr = 255.0/numQuant;
-        const wh = 10;
-        var vals = [1,4,7,10];
-      //WebRTC
-      (function() {
-        var canvas = document.querySelector("#canvas");
-        var context = canvas.getContext('2D');
-        var streaming = false,
-            video     = document.querySelector('#video'),
-            width = 500,
-            height = 500;
-
-        navigator.getMedia = ( navigator.getUserMedia ||
-                               navigator.webkitGetUserMedia ||
-                               navigator.mozGetUserMedia ||
-                               navigator.msGetUserMedia);
-
-        navigator.getMedia(
-          {
-            video: true,
-            audio: false
-          },
-          function(stream) {
-            if (navigator.mozGetUserMedia) {
-              video.mozSrcObject = stream;
-            } else {
-              var vendorURL = window.URL || window.webkitURL;
-              video.src = vendorURL.createObjectURL(stream);
-            }
-            video.play();
-          },
-          function(err) {
-            console.log("An error occured! " + err);
-          }
-        );
-
-        video.addEventListener('canplay', function(ev){
-          if (!streaming) {
-            height = video.videoHeight / (video.videoWidth/width);
-            video.setAttribute('width', 250);
-            video.setAttribute('height', 250);
-            canvas.setAttribute('width', 250);
-            canvas.setAttribute('height', 250);
-            streaming = true;
-          }
-        }, false);
-
-        function takepicture() {
-          canvas.width = width;
-          canvas.height = height;
-          var context = canvas.getContext('2d');
-          context.drawImage(video, 0, 0, width, height);
-          var data = canvas.toDataURL('image/jpg');
-          photo.setAttribute('src', data);
-          var totDens = 0.;
-          var pixval;
-
-          var average = function(canvas, x, y) {
-             var total = 0.;
-             var xWidth = wh;
-             var yHeight = wh
-             if (x + wh >= width)
-                xWidth = width - x;
-             if (y + wh >= height)
-                yHeight = height - y;
-             if (xWidth === 0 || yHeight === 0)
-                return 0.0;
-             var data2 = context.getImageData(x, y, xWidth, yHeight).data;
-             var n = data2.length;
-             for (var i = 4; i < n; i += 8)
-                total +=  3 * ((data2[i] * 0.33) + (data2[i + 1] * 0.33) + (data2[i + 2] * 0.33));
-             return (total) / (wh*wh);
-          }
-
-          function printAscii(canvas) { 
-             var avg;
-             var substr;
-             var divStr;
-             for (var i = 0; i <= canvas.height; i+=10) {
-                var s = "";
-                for (var j = 0; j <= canvas.width; j+=10) {
-                   avg = average(canvas, j, i);
-                   substr = Math.floor(avg/incr);
-                   s += characters.substring(substr, substr + 1);
-                }
-                divStr += s.replace(/\s/g, '&nbsp;') + '<br>';
-             }
-             ref.push({text: divStr})
-          }
-          $('#messagesDiv').val('');
-          ref.on('child_added', function(snapshot) {
-            var message = snapshot.val();
-            displayChatMessage(message.text);
-            snapshot.remove();
-          });
-        function displayChatMessage(text) {
-          $('<div/>').text(text).appendTo($('#messagesDiv'));
-        };
-        }
-
-        window.setInterval(function(){takepicture()}, 250);
-      })();
-    </script>
-
     <!-- Custom styles for this template -->
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -150,12 +36,10 @@
         -o-background-size: cover;
         background-size: cover;
       }
-
       .top-bar {
         padding-left: 14%;
         padding-right: 14%;
       }
-
       .logonav {
         float: left;
         height: 50px;
@@ -163,26 +47,21 @@
         line-height: 20px;
         padding-top: 5px;
       }
-
       .container {
         background-color: rgba(0, 0, 0, .4);
         width: 100%;
         padding: 0px 15% 0px 15%;
       }
-
       a:link {
         color: #00ADEE;
       }
-
       a:visited {
         color: #80D6F7;
       }
-
       .about {
         color:#DDDDDD; 
         padding: 0px 60px 18.5% 30px;
       }
-
       .myasc {
         width: 100%;
         height: 100%;
@@ -214,7 +93,7 @@
     </div>
 
     <br><br><br>
-    <div id="messagesDiv" class="myasc" style="color: black;"></div>
+    <div id="myasc" class="myasc" style="color: black;"></div>
 
     <div style="position: absolute; right: 10px; bottom: 10px; border-style: solid; border-width: 2px">
       <video id="video" width="300px" height="300px"></video>
@@ -224,6 +103,105 @@
       <canvas id="canvas" width="300px" height="300px"><img src="http://placekitten.com/g/320/261" id="photo" alt="photo"></canvas>
     </div>
 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
+    <script>
+        const characters = "œæ©¢øðþãêõûµ±¤ç¿ª®()¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'   ";
+        const numQuant = characters.length - 1;
+        const incr = 255.0/numQuant;
+        const wh = 10;
+        var vals = [1,4,7,10];
+      //WebRTC
+      (function() {
+        var canvas = document.querySelector("#canvas");
+        var context = canvas.getContext('2D');
+        var streaming = false,
+            video     = document.querySelector('#video'),
+            width = 500,
+            height = 500;
+        navigator.getMedia = ( navigator.getUserMedia ||
+                               navigator.webkitGetUserMedia ||
+                               navigator.mozGetUserMedia ||
+                               navigator.msGetUserMedia);
+        navigator.getMedia(
+          {
+            video: true,
+            audio: false
+          },
+          function(stream) {
+            if (navigator.mozGetUserMedia) {
+              video.mozSrcObject = stream;
+            } else {
+              var vendorURL = window.URL || window.webkitURL;
+              video.src = vendorURL.createObjectURL(stream);
+            }
+            video.play();
+          },
+          function(err) {
+            console.log("An error occured! " + err);
+          }
+        );
+        video.addEventListener('canplay', function(ev){
+          if (!streaming) {
+            height = video.videoHeight / (video.videoWidth/width);
+            video.setAttribute('width', 250);
+            video.setAttribute('height', 250);
+            canvas.setAttribute('width', 250);
+            canvas.setAttribute('height', 250);
+            streaming = true;
+          }
+        }, false);
+        function takepicture() {
+          canvas.width = width;
+          canvas.height = height;
+          var context = canvas.getContext('2d');
+          context.drawImage(video, 0, 0, width, height);
+          var data = canvas.toDataURL('image/jpg');
+          photo.setAttribute('src', data);
+          var totDens = 0.;
+          var pixval;
+          var average = function(canvas, x, y) {
+             var total = 0.;
+             var xWidth = wh;
+             var yHeight = wh
+             if (x + wh >= width)
+                xWidth = width - x;
+             if (y + wh >= height)
+                yHeight = height - y;
+             if (xWidth === 0 || yHeight === 0)
+                return 0.0;
+             var data2 = context.getImageData(x, y, xWidth, yHeight).data;
+             var n = data2.length;
+             for (var i = 4; i < n; i += 8)
+                total +=  3 * ((data2[i] * 0.33) + (data2[i + 1] * 0.33) + (data2[i + 2] * 0.33));
+             return (total) / (wh*wh);
+          }
+          function printAscii(canvas) { 
+             var avg;
+             var substr;
+             var div;
+             for (var i = 0; i <= canvas.height; i+=10) {
+                var s = "";
+                for (var j = 0; j <= canvas.width; j+=10) {
+                   avg = average(canvas, j, i);
+                   substr = Math.floor(avg/incr);
+                   s += characters.substring(substr, substr + 1);
+                }
+                s = s.replace(/\s/g, '&nbsp;');
+                div = document.getElementById('myasc');
+                div.innerHTML = div.innerHTML + s + '<br>';
+             }
+          }
+          $(".myasc").empty();
+          printAscii(canvas);
+        }
+        window.setInterval(function(){takepicture()}, 250);
+      })();
+    </script>
   </body>
   </html>
