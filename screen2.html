@@ -156,6 +156,7 @@
         }, false);
 
         function takepicture() {
+          canvas = document.querySelector("#canvas");
           width = canvas.width;
           height = canvas.height;
           canvas.getContext('2d').drawImage(video, 0, 0, width, height);
