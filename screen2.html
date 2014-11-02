@@ -177,34 +177,34 @@
 
           var average = function(canvas, x, y) {
              var total = 0.;
-             var xWidth = 11;
-             var yHeight = 11;
+             var xWidth = 10;
+             var yHeight = 10;
              if (x + 10 >= canvas.width)
                 xWidth = canvas.width - x;
              if (y + 10 >= canvas.height)
                 yHeight = canvas.height - y;
-            if (xWidth === 0 || yHeight === 0)
+             if (xWidth === 0 || yHeight === 0)
                 return 0.0;
              var data2 = context.getImageData(x, y, xWidth, yHeight).data;
              for (var i = 0, n = data2.length; i < n; i += 4)
                 total +=  ((data2[i] * 0.33) + (data2[i + 1] * 0.33) + (data2[i + 2] * 0.33));
-            console.log((total * 3) / (data2.length))
-             return total * 3 / (data2.length);
+             console.log((total) / (100))
+             return (total) / (100);
           }
 
           var ascii = function(canvas) { //TODO: send this ascii to the other person
-             var ascii = "";
+             var asc = "";
              var avg;
              var substr;
              for (var i = 0; i <= canvas.height; i+=10) {
                 for (var j = 0; j <= canvas.width; j+=10) {
                    avg = average(canvas, j, i);
                    substr = Math.floor(avg/incr);
-                   ascii += characters.substring(substr, substr + 1);
+                   asc += characters.substring(substr, substr + 1);
                 }
-                ascii += "\n";
+                asc += "\n";
              }
-             return ascii;
+             return asc;
           }
 
           $("#myasc").empty()
