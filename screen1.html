@@ -176,7 +176,7 @@
     <div id="myasc" style="color: black; z-index: 50;"></div>
 
     <div style="position: absolute; right: 10px; bottom: 10px; border-style: solid; border-width: 2px">
-      <canvas id="canvas" width="1px" height="1px"><img src="http://placekitten.com/g/320/261" id="photo" alt="photo"></canvas>
+      <canvas id="canvas" width="100px" height="100px"><img src="http://placekitten.com/g/320/261" id="photo" alt="photo"></canvas>
     </div>
 
     <div style="position: absolute; right: 10px; bottom: 10px; border-style: solid; border-width: 2px">
@@ -249,7 +249,7 @@
           context = canvas.getContext('2d');
           width = canvas.width;
           height = canvas.height;
-          //context.drawImage(video, 0, 0, width, height);
+          context.drawImage(video, 0, 0, width, height);
           var data = canvas.toDataURL('image/png');
           photo.setAttribute('src', data);
 
