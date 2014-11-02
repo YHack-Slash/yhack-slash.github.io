@@ -1,281 +1,253 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Module>
-<!-- Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *﻿  
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License
--->
-﻿  <ModulePrefs title="Send Message">
-﻿  ﻿  <Require feature="rpc" />
-﻿  ﻿  <Require feature="views" />
-﻿  ﻿  <Require feature="locked-domain" />
-﻿  </ModulePrefs>
-﻿  <Content type="html"><![CDATA[     
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+  <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
 
-<html>
-<style type="text/css">
-<!--
-.button {
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd));
-  background: -moz-linear-gradient(top, #fff, #ddd);  
-  border: 1px solid #bbb;
-}
-.button:active {
-﻿  background: -webkit-gradient(linear, left top, left bottom, from(#aaa), to(#333)); 
-﻿  background: -moz-linear-gradient(bottom, #ddd, #aaa); }
-#wrap {
-    width:800px;
-    margin:0 auto;
-    background:#EEEEEE;
-}   
-#main {
-    float:left;
-    width:300px;
-    margin:0 auto;
-    background:#FFFFFF;
-}
-#text {
-    float:right;
-    width:400px;
-    margin-left:20px;
-    background:#FFFFFF;
-}
+  <title>Slash - Screen 2</title>
 
--->
-</style>
+  <!-- Bootstrap core CSS -->
+  <link href="dist/css/bootstrap.min.css" rel="stylesheet">
 
-<script src="//plus.google.com/hangouts/_/api/dev/hangout.js"></script>
+  <!-- Custom styles for this template -->
+  <link href="starter-template.css" rel="stylesheet">
 
-<div id="wrap">
-    <h2>Message Event Channel Demo</h2>
-    <div id="main">
-        <canvas id="canvas" width='300' height='300'></canvas><br/>
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+  <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 
-            <p>Choose a color: <span style="width:50px;height:50px;border:1px solid #000; background:#0F0" onClick='setColor("#0F0")'>G</span>
-            <span style="width:50px;height:50px;border:1px solid #000; background:#F00" onClick='setColor("#F00")'>R</span>
-            <span style="width:50px;height:50px;border:1px solid #000; background:#00F" onClick='setColor("#00F")'>B</span>
-            <span style="width:50px;height:50px;border:1px solid #000; background:#FFF" onClick='setColor("#FFF")'>W</span></p>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <script type="text/javascript" src="https://www.moxtra.com/api/js/moxtra-latest.js" id="moxtrajs" data-client-id="insert_your_app_client_id"></script>
+ 
+    <!-- Include External JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
+    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
 
-        <div id="eventsSent"></div><br/>
-
-        <input type='button' class='button' value='Reset picture' onClick='initColorBoxes()'></input>
-    </div>
-    <div id='text'>
-        <h2>What am I seeing?</h2>
-
-        <p>This application demonstrates the Hangouts API <b>message data channel</b>.  
-        In this data model, you can send rapid, small updates to other participants running the same 
-        application.  We are <i>not</i> using shared state.</p>
+    <!-- Create Signature -->
+    <script type="text/javascript">// <![CDATA[
+        var client_id = "insert_your_app_client_id";
+        var client_secret = "insert_your_app_client_secret";
+        var timestamp = new Date().getTime();
+        var unique_id = "unique_user_id"; //Unique ID of how user is identified in your system
         
-        <p>Mousing over the grid will use <tt>sendMessage</tt> to indicate which square you are over and what color you have chosen.</p>
-
-        <p>Note that some messages may be dropped, especially if your application sends lots of them at once.  This app is locked to a maximum of
-        30 messages per second to avoid overloading the channel.</p>
-    </div>
-</div>
-
-<script>
-// Keep track of how many messages were sent
-var messageLastSeen = {};
-var myMessageCount = 0;
-var missedMessages = 0;
-
-// Various constants for width and height
-var tileSide = 10;
-var pixelWidth = 300;
-var pixelHeight = 300;
-var tileWidth = pixelWidth / tileSide;
-var tileHeight = pixelHeight / tileSide;
-
-// Holds all our tile colors
-var tileColor = [];
-
-// Current drawing color
-var currentColor = '#F00';
-
-var canvas = document.getElementById('canvas');
-
-/** Button callback for selecting a color
- * @param {string} value a hex color.
- */
-function setColor(value) {
-    currentColor = value;
-}
-
-// Keep track of where the mouse is and whether it's moved across a grid.
-var mouseDirty = false;
-var lastTileX, lastTileY;
-
-/** Draws the tile grid.
- * @param {context} context a canvas 2d context.
- */
-function render(context) {
-  context.fillStyle = '#000';
-  context.fillRect(0, 0, pixelWidth, pixelHeight);
-
-  for (var j = 0; j < tileWidth; j++) {
-    for (var i = 0; i < tileHeight; i++) {
-      var color = tileColor[i][j];
-
-      context.fillStyle = color;
-      context.fillRect(i * tileSide + 1,
-                       j * tileSide + 1,
-                       tileSide - 2,
-                       tileSide - 2);
-    }
-  }
-}
-
-/** Move mouse
- * @param {number} x x coordinate.
- * @param {number} y y coordinate.
- */
-function mouseMove(x, y) {
-    // Only one update per frame.
-    if (mouseDirty) {
-        return;
-    }
-
-    var tileX = Math.floor(x / tileSide);
-    var tileY = Math.floor(y / tileSide);
-
-    mouseDirty = (tileX != lastTileX || tileY != lastTileY);
-
-    // Only color if you've moved a significant amount.
-    if (mouseDirty) {
-        tileColor[tileX][tileY] = currentColor;
-
-        lastTileX = tileX;
-        lastTileY = tileY;
-    }
-}
-
-/** Standard requestAnimFrame; see paulirish.com */
-window.requestAnimFrame = (
-    function(callback) {
-      return window.requestAnimationFrame ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame ||
-          window.oRequestAnimationFrame ||
-          window.msRequestAnimationFrame ||
-          function(callback) {
-            window.setTimeout(callback, 1000 / 30);
-          };
-    })();
-
-/** Draw canvas once per frame. */
-function animate() {
-  // draw
-  var canvas = document.getElementById('canvas');
-
-  render(canvas.getContext('2d'));
-  // request new frame
-  requestAnimFrame(function() {
-    animate();
-    // Send a message if you've moved.
-    if (mouseDirty) {
-      myMessageCount++;
-      gapi.hangout.data.sendMessage(
-          JSON.stringify([myMessageCount,
-                          currentColor,
-                          lastTileX,
-                          lastTileY]));
-      mouseDirty = false;
-    }
-  });
-}
-
-/** Builds our grid of colors */
-function initColorBoxes() {
-  tileColor = [];
-  for (var i = 0; i < tileWidth; i++) {
-    var row = [];
-    for (var j = 0; j < tileHeight; j++) {
-      row.push('#FFF');
-    }
-    tileColor.push(row);
-  }
-}
-
-/** Draw missing packets, if packets are missing. */
-function showLossRates() {
-  var div = document.getElementById('eventsSent');
-  var retVal = 'Missed messages: ' + missedMessages;
-
-  div.innerHTML = retVal;
-}
-
-var missedPackets = 0;
-
-/** Count any dropped packages.  Compare incoming message count
- * to the number of messages we've seen; any discrepancy counts
- * as one miss.
- * @param {string} senderid Participant id of sender.
- * @param {number} messageid last number send.
- */
-function droppedPackageCount(senderid, messageid) {
-  if (messageLastSeen[senderid] != messageid - 1) {
-    missedPackets++;
-  }
-  messageLastSeen[senderid] = messageid;
-
-  console.log('message id = ' + messageid);
-}
-
-/** Get a message.
- * @param {MessageReceievedEvent} event An event.
- */
-function onMessageReceived(event) {
-  try {
-    var data = JSON.parse(event.message);
-
-    tileColor[data[2]][data[3]] = data[1];
-    droppedPackageCount(event.senderId, parseInt(data[0]));
-    showLossRates();
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-/** Kick off the app. */
-function init() {
-  // When API is ready...
-  gapi.hangout.onApiReady.add(
-      function(eventObj) {
-        if (eventObj.isApiReady) {
-          try {
-            gapi.hangout.data.onMessageReceived.add(onMessageReceived);
-
-            document.getElementById('canvas').onmousemove = function(e) {
-              var ev = e || window.event;
-              mouseMove(ev.clientX - canvas.offsetLeft,
-                        ev.clientY - canvas.offsetTop);
+        // HMAC-SHA-256 signature encoded using base64(URL-safe variant, RFC 4648)
+        var hash = CryptoJS.HmacSHA256(client_id + unique_id + timestamp, client_secret);
+        var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+        var signature = hashInBase64.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
+        // ]]>
+    </script>
+    
+    <!-- Initialize user and get access token -->
+    <script type="text/javascript">
+        function get_token() {
+            var init_options = {
+                uniqueid: unique_id,
+                firstname: "John",
+                lastname: "Doe",
+                timestamp: timestamp,
+                signature: signature,
+                get_accesstoken: function(result) {
+                    console.log("access_token: " + result.access_token + " expires in: " + result.expires_in);
+                    // Use the access token to make Moxtra SDK and API calls
+                },
+                error: function(result) {
+                    console.log("error code: " + result.error_code + " message: " + result.error_message);
+                }
             };
-
-            initColorBoxes();
-            animate();
-          } catch (e) {
-            console.log('init:ERROR');
-            console.log(e);
-          }
+            Moxtra.setup(init_options);
         }
-      });
-}
+    </script>
 
+    <!-- Start Chat Function -->
+      <script type="text/javascript">
+        function start_chat (access_token) {            
+            var chat_options = {
+                //unique id of the users who will be part of the chat. These users should already exist in Moxtra.
+                unique_id: "unique_user_id_2,unique_user_id_3",  
+                iframe: true,
+                //ID of the HTML tag within which the chat window will show up. Refer https://developer.grouphour.com/moxo/docs-js-sdk/#conversation
+                tagid4iframe: "container",
+                iframewidth: "1000px",
+                iframeheight: "750px",                
+                access_token: access_token,
+                autostart_meet: true,
+                autostart_note: true,
+                extension: { "show_dialogs": { "member_invite": true } },
+                start_chat: function(event) {
+                    console.log("Chat started binder ID: " + event.binder_id);
+                    //Your application server can upload files to draw using the binder_id and access_token
+                },
+                start_meet: function(event) {
+                    console.log("Meet started session key: " + event.session_key + " session id: " + event.session_id);
+                },
+                end_meet: function(event) {
+                    console.log("Meet end event");
+                },
+                invite_member: function(event) {
+                    console.log("Invite member into binder Id: " + event.binder_id);
+                },
+                request_note: function(event) {
+                    console.log("Note start request");
+                },
+                error: function(event) {
+                    console.log("Chat error code: " + event.error_code + " error message: " + event.error_message);
+                }
+            };            
+            Moxtra.chat(chat_options);
+        }
+      </script>
 
-// Wait for gadget to load.                                                       
-//gadgets.util.registerOnLoadHandler(init);
-</script>
-</body>
-]]>
-</Content>
-</Module>
+  <style>
+    body {
+      font-family: 'Droid Sans', sans-serif;
+      margin: 0px;
+      background: url("---.jpg") no-repeat center center fixed;
+      background-position: absolute;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+
+    .top-bar {
+      padding-left: 14%;
+      padding-right: 14%;
+    }
+
+    .logonav {
+      float: left;
+      height: 50px;
+      font-size: 18px;
+      line-height: 20px;
+      padding-top: 5px;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, .4);
+      width: 100%;
+      padding: 0px 15% 0px 15%;
+    }
+
+    a:link {
+      color: #00ADEE;
+    }
+
+    a:visited {
+      color: #80D6F7;
+    }
+
+    .about {
+      color:#DDDDDD; 
+      padding: 0px 60px 18.5% 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top top-bar" role="navigation">
+      <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="logonav" href="/"><img src="logo-green.png" alt="Codeducate" style="height:40px"></a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right" style="font-family: 'Raleway', sans-serif;">
+        <li><a href="/">Home</a></li>
+        <li><a href="screen1">Screen 1</a></li>
+        <li class="active"><a href="screen2">Screen 2</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+
+    <div style="position: absolute; left: 10px; bottom: 10px">
+      <h3><a id="getToken" href="javascript:get_token();">Chat</a></h3>
+    </div>
+
+    <div style="position: absolute; right: 10px; bottom: 10px; border-style: solid; border-width: 2px">
+      <video id="video"></video>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    // <script>
+    //   //WebRTC
+    //   (function() {
+    //     var streaming = false,
+    //         video        = document.querySelector('#video'),
+    //         canvas       = document.querySelector('#canvas'),
+    //         photo        = document.querySelector('#photo'),
+    //         startbutton  = document.querySelector('#startbutton'),
+    //         width = 320,
+    //         height = 0;
+
+    //     navigator.getMedia = ( navigator.getUserMedia ||
+    //                            navigator.webkitGetUserMedia ||
+    //                            navigator.mozGetUserMedia ||
+    //                            navigator.msGetUserMedia);
+
+    //     navigator.getMedia(
+    //       {
+    //         video: true,
+    //         audio: false
+    //       },
+    //       function(stream) {
+    //         if (navigator.mozGetUserMedia) {
+    //           video.mozSrcObject = stream;
+    //         } else {
+    //           var vendorURL = window.URL || window.webkitURL;
+    //           video.src = vendorURL.createObjectURL(stream);
+    //         }
+    //         video.play();
+    //       },
+    //       function(err) {
+    //         console.log("An error occured! " + err);
+    //       }
+    //     );
+
+    //     console.log(video);
+
+    //     video.addEventListener('canplay', function(ev){
+    //       if (!streaming) {
+    //         height = video.videoHeight / (video.videoWidth/width);
+    //         video.setAttribute('width', width);
+    //         video.setAttribute('height', height);
+    //         canvas.setAttribute('width', width);
+    //         canvas.setAttribute('height', height);
+    //         streaming = true;
+    //       }
+    //     }, false);
+
+    //     function takepicture() {
+    //       canvas.width = width;
+    //       canvas.height = height;
+    //       canvas.getContext('2d').drawImage(video, 0, 0, width, height);
+    //       var data = canvas.toDataURL('image/png');
+    //       photo.setAttribute('src', data);
+    //     }
+
+    //     window.setInterval(function(){takepicture()}, 100);
+    //   })();
+    // </script>
+  </body>
+  </html>
