@@ -16,7 +16,7 @@
             var client_id = "gczKDuCZAeo";
             var client_secret = "gty77jQbwZw";
             var timestamp = new Date().getTime();
-            var unique_id = "Sayan"; //Unique ID of how user is identified in your system
+            var unique_id = "User2"; //Unique ID of how user is identified in your system
             
             var hash = CryptoJS.HmacSHA256(client_id + unique_id + timestamp, client_secret);
             var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
@@ -50,7 +50,7 @@
         function start_chat (access_token) {            
             var chat_options = {
                 //unique id of the users who will be part of the chat. These users should already exist in Moxtra.
-                unique_id: "Sahith",  
+                unique_id: "User1",  
                 iframe: true,
                 //ID of the HTML tag within which the chat window will show up. Refer https://developer.grouphour.com/moxo/docs-js-sdk/#conversation
                 tagid4iframe: "container",
