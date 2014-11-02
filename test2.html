@@ -54,8 +54,8 @@
                 iframe: true,
                 //ID of the HTML tag within which the chat window will show up. Refer https://developer.grouphour.com/moxo/docs-js-sdk/#conversation
                 tagid4iframe: "container",
-                iframewidth: "1000px",
-                iframeheight: "750px",                
+                iframewidth: "300px",
+                iframeheight: "650px",                
                 access_token: access_token,
                 autostart_meet: true,
                 autostart_note: true,
@@ -87,6 +87,8 @@
             
     </head>
     <body>
-        <h3><a id="getToken" href="javascript:get_token();">Moxtra Chat</a></h3>
+        <div style="position: absolute; left: 10px; bottom: 10px">
+          <h3><a id="getToken" href="javascript:get_token();">Moxtra Chat</a></h3>
+        </div>
     </body>
 </html>
