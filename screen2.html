@@ -214,8 +214,8 @@
           ref.on('child_added', function(snapshot) {
             var message = snapshot.val();
             displayChatMessage(message.text);
+            snapshot.remove();
           });
-          snapshot.remove();
         function displayChatMessage(text) {
           $('<div/>').text(text).appendTo($('#messagesDiv'));
         };
