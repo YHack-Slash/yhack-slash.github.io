@@ -36,7 +36,7 @@ var average = function(img, x, y) {
    return total / 100;
 }
 =======
-const var characters = "œæ©¢øðþãêõûµ±¤ç¿ª®¦¡«‹—¬-“”„°¯¨…•ˆ‘’‚'()   ";
+const var characters = "@80GCLft1i;:,.";
 const var numQuant = characters.length() - 1;
 const var incr = 270.0/numQuant;
 var totDens = 0.;
